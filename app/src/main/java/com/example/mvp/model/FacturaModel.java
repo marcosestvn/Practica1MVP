@@ -43,6 +43,7 @@ public class FacturaModel implements com.example.mvp.interfaces.factura.FacturaM
     public void recogerFacturas() {
 
         Call<RespuestaFactura> call = retrofit.getFacturas();
+        presenter.mostrarLoader();
 
         call.enqueue(
                 new Callback<RespuestaFactura>() {
@@ -51,16 +52,26 @@ public class FacturaModel implements com.example.mvp.interfaces.factura.FacturaM
                         if (response.isSuccessful()) {
 
                             assert response.body() != null;
-
                             facturas = response.body().getFacturas();
-
-                            getMaxImporte();
 
                             //Para apis menores de 24 tenemos que definir la propia función de remove
                             facturas.removeIf(factura -> !filtrar(factura));
 
-                            //Mediante se accede a la inicialización del recycler en nuestra view
-                            presenter.initRecyclerView();
+                            if(!facturas.isEmpty()){
+
+
+                                getMaxImporte();
+
+                                presenter.ocultarFacturasVacias();
+                                //Se accede a la inicialización del recycler en nuestra view
+                                presenter.initRecyclerView();
+
+                            }else{
+                                presenter.mostrarFacturasVacias();
+
+                            }
+
+
                         }
                     }
 

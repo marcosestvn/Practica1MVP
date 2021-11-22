@@ -56,4 +56,15 @@ public class FacturaPresenter implements com.example.mvp.interfaces.factura.Fact
             this.getFacturas();
         }
     }
+    public void mostrarFacturasVacias(){
+        this.view.mostrarFacturasVacias();
+    }
+
+    public void ocultarFacturasVacias(){
+        this.view.ocultarFacturasVacias();
+    }
+
+    public void mostrarLoader(){
+        this.view.mostrarLoader();
+    }
 }

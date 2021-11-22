@@ -112,4 +112,22 @@ public class FacturaView extends AppCompatActivity implements com.example.mvp.in
         binding.progressBar.setVisibility(View.GONE);
         binding.contenido.setVisibility(View.VISIBLE);
     }
+
+    public void mostrarLoader(){
+        binding.progressBar.setVisibility(View.VISIBLE);
+        binding.contenido.setVisibility(View.GONE);
+    }
+
+
+    public void mostrarFacturasVacias(){
+        binding.progressBar.setVisibility(View.GONE);
+        binding.contenido.setVisibility(View.GONE);
+        binding.facturasVacias.setVisibility(View.VISIBLE);
+
+    }
+
+    public void ocultarFacturasVacias(){
+        binding.contenido.setVisibility(View.VISIBLE);
+        binding.facturasVacias.setVisibility(View.GONE);
+    }
 }
