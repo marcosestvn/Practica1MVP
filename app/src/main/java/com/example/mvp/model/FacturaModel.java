@@ -40,7 +40,7 @@ public class FacturaModel implements com.example.mvp.interfaces.factura.FacturaM
 
     //Llamada a la API donde se recogen las facturas y se indica al presenter la inicialización del recyclerview con
     //este conjunto de datos
-    public void recogerFacturas() {
+    public  void recogerFacturas() {
 
         Call<RespuestaFactura> call = retrofit.getFacturas();
         presenter.mostrarLoader();
