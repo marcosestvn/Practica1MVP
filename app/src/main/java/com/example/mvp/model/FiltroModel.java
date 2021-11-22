@@ -3,8 +3,15 @@ package com.example.mvp.model;
 import android.content.Intent;
 
 import com.example.mvp.Constantes;
+import com.example.mvp.DatePickerFragment;
+import com.example.mvp.MyUtil;
+import com.example.mvp.R;
 import com.example.mvp.presenter.FiltroPresenter;
 import com.google.gson.Gson;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 public class FiltroModel implements com.example.mvp.interfaces.filtro.FiltroModel {
 
@@ -80,5 +87,53 @@ public class FiltroModel implements com.example.mvp.interfaces.filtro.FiltroMode
         Intent intentConWrapper = new Intent();
         intentConWrapper.putExtra(Constantes.wrapperFiltro,getWrapperParseado());
         return intentConWrapper;
+    }
+
+    public DatePickerFragment mostrarDialog(int id, DatePickerFragment datePicker) {
+        String fechaDesdeTemp = getFecha(Constantes.clave_1);
+        String fechaHastaTemp = getFecha(Constantes.clave_2);
+        if (id == R.id.fechaDesde) {
+
+
+            if (!(fechaHastaTemp.isEmpty())) {
+                datePicker.setMaxDate2(fechaHastaTemp);
+            }
+
+            if (!fechaDesdeTemp.isEmpty()) {
+                datePicker.setCurrentDate(fechaDesdeTemp);
+            }
+        }
+
+        if (id == R.id.fechaHasta) {
+
+            if (!(fechaDesdeTemp.isEmpty())) {
+                datePicker.setMinDate2(fechaDesdeTemp);
+            }
+
+            if (!fechaHastaTemp.isEmpty()) {
+                datePicker.setCurrentDate(fechaHastaTemp);
+            }
+        }
+
+        return datePicker;
+    }
+
+    public void onDateSelected(Integer day, Integer month, Integer year, int id) {
+        DateTimeFormatter ff = DateTimeFormat.forPattern(Constantes.defaultPatternFecha);
+
+
+        month++;
+
+        DateTime fecha = DateTimeFormat.forPattern(Constantes.defaultPatternFecha)
+                .parseDateTime(MyUtil.concatenar((day.toString()), "/", ((month).toString()), "/", (year.toString())));
+
+
+        if (id == R.id.fechaHasta) {
+            setFecha(Constantes.clave_2, ff.print(fecha));
+        }
+
+        if (id == R.id.fechaDesde) {
+            setFecha(Constantes.clave_1, ff.print(fecha));
+        }
     }
 }

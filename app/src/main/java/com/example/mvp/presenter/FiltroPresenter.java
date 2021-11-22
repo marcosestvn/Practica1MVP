@@ -2,6 +2,7 @@ package com.example.mvp.presenter;
 
 import android.content.Intent;
 
+import com.example.mvp.DatePickerFragment;
 import com.example.mvp.model.FiltroModel;
 import com.example.mvp.model.WrapperFiltro;
 import com.example.mvp.view.FiltroView;
@@ -79,4 +80,11 @@ public class FiltroPresenter implements com.example.mvp.interfaces.filtro.Filtro
     }
 
 
+    public DatePickerFragment mostrarDialog(int id, DatePickerFragment datePicker) {
+        return this.model.mostrarDialog(id, datePicker);
+    }
+
+    public void onDateSelected(int day, int month, int year, int id) {
+        model.onDateSelected(day,month,year,id);
+    }
 }

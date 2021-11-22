@@ -159,56 +159,14 @@ public class FiltroView extends AppCompatActivity implements com.example.mvp.int
 
     //Método para mostrar DatePicker
     public void mostrarDialog(int id) {
-        DatePickerFragment datePicker = DatePickerFragment.newInstance((datepicker2, year, month, day) -> onDateSelected(day, month, year, id));
-        String fechaDesdeTemp = presenter.getFecha(Constantes.clave_1);
-        String fechaHastaTemp = presenter.getFecha(Constantes.clave_2);
+        DatePickerFragment datePicker = DatePickerFragment.newInstance((datepicker2, year, month, day) -> presenter.onDateSelected(day, month, year, id));
 
-        if (id == binding.fechaDesde.getId()) {
-
-
-            if (!(fechaHastaTemp.isEmpty())) {
-                datePicker.setMaxDate2(fechaHastaTemp);
-            }
-
-            if (!fechaDesdeTemp.isEmpty()) {
-                datePicker.setCurrentDate(fechaDesdeTemp);
-            }
-        }
-
-        if (id == binding.fechaHasta.getId()) {
-
-            if (!(fechaDesdeTemp.isEmpty())) {
-                datePicker.setMinDate2(fechaDesdeTemp);
-            }
-
-            if (!fechaHastaTemp.isEmpty()) {
-                datePicker.setCurrentDate(fechaHastaTemp);
-            }
-        }
+        datePicker=this.presenter.mostrarDialog(id, datePicker);
 
         datePicker.show(getSupportFragmentManager(), "datePicker");
     }
 
-    //Método listener de fecha seleccionada en DatePickerDialog
-    private void onDateSelected(Integer day, Integer month, Integer year, Integer id) {
 
-        DateTimeFormatter ff = DateTimeFormat.forPattern(Constantes.defaultPatternFecha);
-
-
-        month++;
-
-        DateTime fecha = DateTimeFormat.forPattern(Constantes.defaultPatternFecha)
-                .parseDateTime(MyUtil.concatenar((day.toString()), "/", ((month).toString()), "/", (year.toString())));
-
-
-        if (id == R.id.fechaHasta) {
-            presenter.setFecha(Constantes.clave_2, ff.print(fecha));
-        }
-
-        if (id == R.id.fechaDesde) {
-            presenter.setFecha(Constantes.clave_1, ff.print(fecha));
-        }
-    }
 
 
 }
